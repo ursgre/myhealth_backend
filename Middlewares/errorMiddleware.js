@@ -5,7 +5,7 @@ function errorHandler(statusCode, err, req, res, next) {
         return next(err);
     }
     
-    console.log("ERROR MIDDLEWARE CALLED")
+    console.log("Error with middleware")
     res.status(statusCode || 500).json({
         ok: false, // Set the "ok" field to false for errors
         message: err.message,
