@@ -1,35 +1,26 @@
-const express = require('express');
-const app = express();
+import express from "express";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
 
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const PORT = 8000;
-const cookieParser = require('cookie-parser');
+import userRoutes from "./Routes/User.js"
 
-require('dotenv').config();
-require('./db')
+const app = express() 
+dotenv.config()
+app.use(bodyParser.json({limit: "1gb", extended: true}));
+app.use(bodyParser.urlencoded({limit: "1gb", extended: true}));
+app.use(cors());
 
-app.use(bodyParser.json());
-const allowedOrigins = ['http://localhost:3000']; 
-app.use(
-    cors({
-        origin: function (origin, callback) {
-            if (!origin || allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error('Not allowed by CORS'));
-            }
-        },
-        credentials: true, // Allow credentials
-    })
-);
-app.use(cookieParser());
+app.use("/user", userRoutes)
 
-app.get('/', (req, res) => {
-    res.json({ message: 'The API is working' });
-});
-
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+mongoose.connect(process.env.MONGO_URL,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}).then(
+    () => {
+        app.listen(8080, () => console.log('Connected to database'))
+    }
+).catch((err) => {
+    console.log('Error connecting to database ' + err);
+})

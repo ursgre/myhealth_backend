@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+import mongoose from "mongoose";
 
 
-const userSchema = new mongoose.Schema({
+
+const userSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -16,30 +16,14 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    weight: [
-        {
-            weight: {
-                type: Number,
-                required: true,
-            },
-            date: {
-                type: Date,
-                required: true,
-            },
-        }
-    ],
-    height: [
-        {
-            height: {
-                type: Number,
-                required: true,
-            },
-            date: {
-                type: Date,
-                required: true,
-            },
-        }
-    ],
+    weight: {
+        type: Number,
+        required:true,
+    },
+    height: {
+        type: Number,
+        required:true,
+    },
     gender: {
         type: String,
         required: true,
@@ -127,16 +111,16 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-userSchema.pre('save', async function (next) {
-    const user = this;
+// userSchema.pre('save', async function (next) {
+//     const user = this;
 
-    if (user.isModified('password')) {
-        user.password = await bcrypt.hash(user.password, 8);
-    }
+//     if (user.isModified('password')) {
+//         user.password = await bcrypt.hash(user.password, 8);
+//     }
 
-    next();
-});
+//     next();
+// });
 
 
 const User = mongoose.model('User', userSchema);
-module.exports = User;
+export default User
