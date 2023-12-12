@@ -28,10 +28,6 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    dob: {
-        type: String,
-        required: true,
-    },
     goal: {
         type: String,
         required: true,
