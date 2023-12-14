@@ -17,11 +17,11 @@ function createResponse(ok, message, data) {
 }
 
 
-router.get('/test', authTokenHandler, async (req, res) => {
+export const test = async (req, res) => { //router.get('/test', authTokenHandler, async (req, res) =>
     res.json(createResponse(true, 'Test API works for report'));
-});
+}
 
-router.get('/getreport', authTokenHandler, async (req, res) => {
+export const getreport = async (req, res) =>  { //router.get('/getreport', authTokenHandler, async (req, res) => 
     // get today's calorieIntake
     const userId = req.userId;
     const user = await User.findById({ _id: userId });
@@ -82,15 +82,15 @@ router.get('/getreport', authTokenHandler, async (req, res) => {
     let BMR = 0;
     let gender = user.gender;
     if (gender == 'male') {
-        BMR = 88.362 + (13.397 * weightInKg) + (4.799 * heightInCm) - (5.677 * age)
+        BMR = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)
 
     }
     else if (gender == 'female') {
-        BMR = 447.593 + (9.247 * weightInKg) + (3.098 * heightInCm) - (4.330 * age)
+        BMR = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age)
 
     }
     else {
-        BMR = 447.593 + (9.247 * weightInKg) + (3.098 * heightInCm) - (4.330 * age)
+        BMR = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age)
     }
     if (user.goal == 'weightLoss') {
         maxCalorieIntake = BMR - 500;
@@ -107,21 +107,7 @@ router.get('/getreport', authTokenHandler, async (req, res) => {
     // get goal weight
     let goalWeight = 22 * ((user.height[user.height.length - 1].height / 100) ** 2);
 
-    // get goal workout
-    let goalWorkout = 0;
-    if (user.goal == "weightLoss") {
-   
-        goalWorkout = 7;
-    }
-    else if (user.goal == "weightGain") {
-    
-        goalWorkout = 4;
-    }
-    else {
-    
-        goalWorkout = 5;
-    }
-
+  
 
     // get goal steps
     let goalSteps = 0;
@@ -182,8 +168,8 @@ router.get('/getreport', authTokenHandler, async (req, res) => {
     ]
 
     res.json(createResponse(true, 'Report', tempResponse));
-})
+}
 
 
 
-module.exports = router;
+//module.exports = router;

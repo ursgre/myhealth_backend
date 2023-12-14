@@ -4,7 +4,7 @@ const authTokenHandler = require('../Middlewares/checkAuthToken');
 const jwt = require('jsonwebtoken');
 const errorHandler = require('../Middlewares/errorMiddleware');
 const request = require('request');
-const User = require('../Models/UserSchema');
+import User from "../Models/UserSchema.js";
 require('dotenv').config();
 
 
@@ -17,14 +17,14 @@ function createResponse(ok, message, data) {
 }
 
 
-router.get('/test', authTokenHandler, async (req, res) => {
-    res.json(createResponse(true, 'Test API works for calorie intake report'));
-});
+export const test = async (req, res) => { //router.get('/test', authTokenHandler, async (req, res) =>
+    res.json({ message: "Test api works for CalorieIntake" });
+}
 
-router.post('/addcalorieintake', authTokenHandler, async (req, res) => {
+export const addCalorieintake = async (req, res) =>  { //authTokenHandler
     const { item, date, quantity, quantitytype } = req.body;
     if (!item || !date || !quantity || !quantitytype) {
-        return res.status(400).json(createResponse(false, 'Please provide all the details'));
+        return res.status(400).json({ message: "Please give all the details" });
     }
     let qtyingrams = 0;
     if (quantitytype === 'g') {
@@ -40,7 +40,7 @@ router.post('/addcalorieintake', authTokenHandler, async (req, res) => {
         qtyingrams = quantity * 1000;
     }
     else {
-        return res.status(400).json(createResponse(false, 'Invalid quantity type'));
+        return res.status(400).json({ message: "Invalid quantity type" });
     }
 
     var query = item;
@@ -81,12 +81,12 @@ router.post('/addcalorieintake', authTokenHandler, async (req, res) => {
             })
 
             await user.save();
-            res.json(createResponse(true, 'Calorie intake added successfully'));
+            res.json({ message: "Clorie intake added successfully" });
         }
     });
 
-})
-router.post('/getcalorieintakebydate', authTokenHandler, async (req, res) => {
+}
+export const getcalorieintakebydate = async (req, res) =>  { //router.post('/getcalorieintakebydate', authTokenHandler, async (req, res)
     const { date } = req.body;
     const userId = req.userId;
     const user = await User.findById({ _id: userId });
@@ -99,8 +99,9 @@ router.post('/getcalorieintakebydate', authTokenHandler, async (req, res) => {
     user.calorieIntake = filterEntriesByDate(user.calorieIntake, new Date(date));
     res.json(createResponse(true, 'Calorie intake for the date', user.calorieIntake));
 
-})
-router.post('/getcalorieintakebylimit', authTokenHandler, async (req, res) => {
+}
+
+export const getcalorieintakebylimit= async (req, res) => { //router.post('/getcalorieintakebylimit', authTokenHandler, async (req, res) =>
     const { limit } = req.body;
     const userId = req.userId;
     const user = await User.findById({ _id: userId });
@@ -125,8 +126,8 @@ router.post('/getcalorieintakebylimit', authTokenHandler, async (req, res) => {
 
 
     }
-})
-router.delete('/deletecalorieintake', authTokenHandler, async (req, res) => {
+}
+export const deletecalorieintake= async (req, res) =>  { //router.delete('/deletecalorieintake', authTokenHandler, async (req, res) =>
     const { item, date } = req.body;
     if (!item || !date) {
         return res.status(400).json(createResponse(false, 'Please provide all the details'));
@@ -141,8 +142,8 @@ router.delete('/deletecalorieintake', authTokenHandler, async (req, res) => {
     await user.save();
     res.json(createResponse(true, 'Calorie intake deleted successfully'));
 
-})
-router.get('/getgoalcalorieintake', authTokenHandler, async (req, res) => {
+}
+export const getgoalcalorieintake = async (req, res) =>  { //router.get('/getgoalcalorieintake', authTokenHandler, async (req, res) =>
     const userId = req.userId;
     const user = await User.findById({ _id: userId });
     let maxCalorieIntake = 0;
@@ -174,7 +175,7 @@ router.get('/getgoalcalorieintake', authTokenHandler, async (req, res) => {
 
     res.json(createResponse(true, 'max calorie intake', { maxCalorieIntake }));
 
-})
+}
 
 
 function filterEntriesByDate(entries, targetDate) {
@@ -187,4 +188,4 @@ function filterEntriesByDate(entries, targetDate) {
         );
     });
 }
-module.exports = router;
+//module.exports = router;

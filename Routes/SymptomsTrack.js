@@ -1,6 +1,6 @@
 import express from "express";
-import { register } from "../Controllers/SleepTrack.js";
-import { login } from "../Controllers/SleepTrack.js";
+import { register } from "../Controllers/SymptomsTrack.js";
+import { login } from "../Controllers/SymptomsTrack.js";
 
 const router = express.Router()
 
