@@ -1,10 +1,12 @@
 import express from "express";
-import { register } from "../Controllers/SymptomsTrack.js";
-import { login } from "../Controllers/SymptomsTrack.js";
+import { searchsymptoms } from "../Controllers/SymptomsTrack.js";
+import { addsymptoms } from "../Controllers/SymptomsTrack.js";
+import { deletesymptom } from "../Controllers/SymptomsTrack.js";
 
 const router = express.Router()
 
-router.post("/register", register)
-router.post("/login", login)
+router.get("/searchsymptoms", searchsymptoms)
+router.post("/addsymptoms", addsymptoms)
+router.delete("/deletesymptom", deletesymptom)
 
 export default router 

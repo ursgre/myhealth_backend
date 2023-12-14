@@ -1,17 +1,17 @@
 
 
  
-  app.get('/api/symptoms', async (req, res) => {
+ export const searchsymptoms = async (req, res) => {
     try {
       const symptoms = await Symptom.find();
       res.json(symptoms);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  });
+  }
   
   
-  app.post('/api/symptoms', async (req, res) => {
+  export const addsymptoms = async (req, res) => {
     const { name, caption } = req.body;
   
     try {
@@ -21,9 +21,9 @@
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
-  });
+  }
   
-  app.delete('/api/symptoms/:id', async (req, res) => {
+  export const deletesymptoms = async (req, res) => {
     const { id } = req.params;
   
     try {
@@ -35,4 +35,4 @@
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  });
+  }
