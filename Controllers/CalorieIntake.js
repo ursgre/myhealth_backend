@@ -1,12 +1,12 @@
 import express from 'express';
-const router = express.Router();
-const authTokenHandler = require('../Middlewares/checkAuthToken');
-const jwt = require('jsonwebtoken');
-const errorHandler = require('../Middlewares/errorMiddleware');
-const request = require('request');
+import authTokenHandler from '../Middlewares/checkAuthToken.js';
+import jwt from 'jsonwebtoken';
+import errorHandler from '../Middlewares/errorMiddleware.js';
+import request from 'request';
 import User from "../Models/UserSchema.js";
-require('dotenv').config();
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 function createResponse(ok, message, data) {
     return {
