@@ -1,5 +1,15 @@
+import Symptom from "../Models/SymptomSchema.js";
 
+export const getAllSymptoms = async ( req, res) => {
+  try{
+    const allSymptoms = await Symptom.find({creator: req.userId})
 
+    res.status(200).json({message: "get all succcess", data: allSymptoms})
+  }
+  catch(error){
+    res.status(500).json({ error: error.message });
+  }
+}
  
  export const searchsymptoms = async (req, res) => {
     try {
@@ -23,7 +33,7 @@
     }
   }
   
-  export const deletesymptoms = async (req, res) => {
+  export const deletesymptom = async (req, res) => {
     const { id } = req.params;
   
     try {

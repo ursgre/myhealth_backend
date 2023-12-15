@@ -5,14 +5,15 @@ import { getcalorieintakebylimit } from "../Controllers/CalorieIntake.js";
 import { deletecalorieintake } from "../Controllers/CalorieIntake.js";
 import { getgoalcalorieintake } from "../Controllers/CalorieIntake.js";
 import { test } from "../Controllers/CalorieIntake.js";
+import  checkAuthToken from "../Middlewares/checkAuthToken.js"
 
 const router = express.Router()
 
 router.get("/test", test)
-router.post("/addCalorieintake", addCalorieintake)
-router.post("/getcalorieintakebydate", getcalorieintakebydate)
-router.post("/getcalorieintakebylimit", getcalorieintakebylimit)
-router.delete("/deletecalorieintake", deletecalorieintake)
-router.get("/getgoalcalorieintake", getgoalcalorieintake)
+router.post("/addCalorieintake", checkAuthToken, addCalorieintake)
+router.post("/getcalorieintakebydate",  checkAuthToken, getcalorieintakebydate)
+router.post("/getcalorieintakebylimit",  checkAuthToken, getcalorieintakebylimit)
+router.delete("/deletecalorieintake",  checkAuthToken, deletecalorieintake)
+router.get("/getgoalcalorieintake",  checkAuthToken, getgoalcalorieintake)
 
 export default router 

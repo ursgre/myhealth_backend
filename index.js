@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import userSymptomRoutes from "./Routes/Symptom.js"
 import userRoutes from "./Routes/User.js"
 
 const app = express() 
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({limit: "1gb", extended: true}));
 app.use(cors());
 
 app.use("/user", userRoutes)
+app.use("/symptom", userSymptomRoutes)
 
 mongoose.connect(process.env.MONGO_URL,{
     useNewUrlParser: true,
