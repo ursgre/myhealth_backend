@@ -1,5 +1,6 @@
 import User from "../Models/UserSchema.js"
 import bcrypt from "bcrypt"
+import jwt from 'jsonwebtoken';
 
 export const register = async (req, res) => {
     console.log(req.body);
@@ -51,7 +52,7 @@ export const login = async (req, res) => {
         //const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '100m' });
 
         res.cookie('authToken', authToken, { httpOnly: true });
-        res.cookie('refreshToken', refreshToken, { httpOnly: true });
+        //res.cookie('refreshToken', refreshToken, { httpOnly: true });
         res.status(200).json({ message: "Login successful!", token: authToken });
     }
     catch (err) {
